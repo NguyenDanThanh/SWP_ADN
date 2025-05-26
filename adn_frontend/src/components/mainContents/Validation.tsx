@@ -6,37 +6,37 @@ export const signUpSchema = yup.object().shape({
   fullName: yup
     .string()
     .trim()
-    .required("Họ và tên là bắt buộc")
-    .min(1, "Tên Quá Ngắn Và Không được bỏ trống"),
+    .required("Không được bỏ trống")
+    .min(1, "Không được bỏ trống"),
   username: yup
     .string()
     .trim()
-    .required("Tài khoản là bắt buộc")
-    .min(8, "Không được bỏ trống")
-    .matches(noSpace, "không được có khoảng trắng"),
+    .required()
+    .matches(noSpace, "không được có khoảng trắng")
+    .min(8, "Tên quá ngắn"),
   email: yup
     .string()
     .trim()
-    .required("Email là bắt buộc")
-    .min(1, "Không được bỏ trống")
-    .matches(noSpace, "không được có khoảng trắng"),
+    .required("Không được bỏ trống")
+    .matches(noSpace, "không được có khoảng trắng")
+    .min(1, "Không được bỏ trống"),
   password: yup
     .string()
     .trim()
-    .required("Mật khẩu là bắt buộc")
-    .min(8, "Không được bỏ trống")
-    .matches(/[A-Z]/, "Cần có chữ hoa")
-    .matches(/[a-z]/, "Cần có chữ thường")
-    .matches(/\d/, "Cần có số")
-    .matches(/[@$!%*?&#]/, "Cần ký tự đặc biệt")
-    .matches(/^\S+$/, "Mật khẩu không được chứa dấu cách"),
-  confirmPasword: yup
+    .min(8, "mật khẩu quá ngắn")
+    .matches(/[A-Z]/, "Mật khẩu không đúng định dạng")
+    .matches(/[a-z]/, "Mật khẩu không đúng định dạng")
+    .matches(/\d/, "Mật khẩu không đúng định dạng")
+    .matches(/[@$!%*?&#]/, "Mật khẩu không đúng định dạng")
+    .matches(/^\S+$/, "Mật khẩu không đúng định dạng")
+    .required("Không được bỏ trống"),
+  confirmPassword: yup
     .string()
-    .required()
+    .required("Không được bỏ trống")
     .oneOf([yup.ref("password")], "Mật khẩu nhập lại không khớp"),
 
   phone: yup
     .string()
-    .required("số điện thoại bắt buộc")
-    .matches(/^\d{10,15}$/, "không được nhập chữ"),
+    .required()
+    .matches(/^\d{10,15}$/, "Số điện thoại không đúng"),
 });

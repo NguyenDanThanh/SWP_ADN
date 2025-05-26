@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./mainContent.css";
-import { signUpSchema } from "./validation";
+import { signUpSchema } from "./Validation";
 import { ValidationError } from "yup";
 
 type Info = {
@@ -147,8 +147,13 @@ const SignUp = () => {
         />
         {error.password && <div className="text-danger">{error.password}</div>}
       </div>
-      <div id="rulePass" className="form-text">
-        Ràng buộc
+      <div id="rulePass" className="form-text text-start">
+        <ul>
+          <li>Có ít nhất 8 ký tự</li>
+          <li>Có ít nhất 1 chữ thường và hoa</li>
+          <li>Có ít nhất 1 ký tự đặc biệt</li>
+          <li>Có ít nhất 1 chữ số</li>
+        </ul>
       </div>
       <div className="mb-3 text-start">
         <label htmlFor="confirmPassword" className="form-label">
