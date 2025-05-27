@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./mainContent.css";
 import { signUpSchema } from "./Validation";
 import { ValidationError } from "yup";
+import { Box, Button, FormHelperText, Paper, TextField, Typography } from "@mui/material";
 
 type Info = {
   fullName: string;
@@ -86,111 +87,119 @@ const SignUp = () => {
   };
 
   return (
-    <form className="sign-up" onSubmit={handleSubmit}>
-      <div className="mb-3 text-start " style={{ width: 600 }}>
-        <label htmlFor="fullname" className="form-label">
-          Họ và tên
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="fullname"
-          name="fullName"
-          value={info.fullName}
-          onChange={handleInput}
-        />
-        {error.fullName && <div className="text-danger">{error.fullName}</div>}
-      </div>
+    <Paper elevation={20} style={{ padding: 40, borderRadius: 20 }}>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          sx={{ width: 600 }}
+          onSubmit={handleSubmit}
+        >
+          <Typography variant="h5" gutterBottom color="blue">
+            Đăng Ký
+          </Typography>
+          <Box mb={3}>
+            <TextField
+              fullWidth
+              id="validationDefault01"
+              name="fullName"
+              label="Họ và tên"
+              value={info.fullName}
+              onChange={handleInput}
+              error={!!error.fullName}
+              helperText={error.fullName}
+            />
+          </Box>
 
-      <div className="mb-3 text-start">
-        <label htmlFor="username" className="form-label">
-          Tên đăng nhập
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="username"
-          name="username"
-          value={info.username}
-          onChange={handleInput}
-        />
-        {error.username && <div className="text-danger">{error.username}</div>}
-      </div>
+          <Box mb={3}>
+            <TextField
+              fullWidth
+              id="username"
+              name="username"
+              label="Tên đăng nhập"
+              value={info.username}
+              onChange={handleInput}
+              error={!!error.username}
+              helperText={error.username}
+            />
+          </Box>
 
-      <div className="mb-3 text-start">
-        <label htmlFor="email" className="form-label">
-          Địa chỉ email
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="email"
-          name="email"
-          value={info.email}
-          onChange={handleInput}
-        />
-        {error.email && <div className="text-danger">{error.email}</div>}
-      </div>
+          <Box mb={3}>
+            <TextField
+              fullWidth
+              id="email"
+              name="email"
+              label="Địa chỉ email"
+              type="email"
+              value={info.email}
+              onChange={handleInput}
+              error={!!error.email}
+              helperText={error.email}
+            />
+          </Box>
 
-      <div className="mb-3 text-start">
-        <label htmlFor="password" className="form-label">
-          Mật khẩu
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="password"
-          name="password"
-          aria-describedby="rulePass"
-          value={info.password}
-          onChange={handleInput}
-        />
-        {error.password && <div className="text-danger">{error.password}</div>}
-      </div>
-      <div id="rulePass" className="form-text text-start">
-        <ul>
-          <li>Có ít nhất 8 ký tự</li>
-          <li>Có ít nhất 1 chữ thường và hoa</li>
-          <li>Có ít nhất 1 ký tự đặc biệt</li>
-          <li>Có ít nhất 1 chữ số</li>
-        </ul>
-      </div>
-      <div className="mb-3 text-start">
-        <label htmlFor="confirmPassword" className="form-label">
-          Nhập lại mật khẩu
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="confirmPassword"
-          name="confirmPassword"
-          value={info.confirmPassword}
-          onChange={handleInput}
-        />
-        {error.confirmPassword && (
-          <div className="text-danger">{error.confirmPassword}</div>
-        )}
-      </div>
+          <Box mb={3}>
+            <TextField
+              fullWidth
+              id="password"
+              name="password"
+              label="Mật khẩu"
+              type="password"
+              aria-describedby="rulePass"
+              value={info.password}
+              onChange={handleInput}
+              error={!!error.password}
+              helperText={error.password}
+            />
+            <FormHelperText id="rulePass" sx={{ textAlign: "left" }}>
+              <ul style={{ margin: 0, paddingLeft: 20 }}>
+                <li>Có ít nhất 8 ký tự</li>
+                <li>Có ít nhất 1 chữ thường và hoa</li>
+                <li>Có ít nhất 1 ký tự đặc biệt</li>
+                <li>Có ít nhất 1 chữ số</li>
+              </ul>
+            </FormHelperText>
+          </Box>
 
-      <div className="mb-3 text-start">
-        <label htmlFor="phone" className="form-label">
-          Số điện thoại
-        </label>
-        <input
-          type="tel"
-          className="form-control"
-          id="phone"
-          name="phone"
-          value={info.phone}
-          onChange={handleInput}
-        />
-        {error.phone && <div className="text-danger">{error.phone}</div>}
-      </div>
+          <Box mb={3}>
+            <TextField
+              fullWidth
+              id="confirmPassword"
+              name="confirmPassword"
+              label="Nhập lại mật khẩu"
+              type="password"
+              value={info.confirmPassword}
+              onChange={handleInput}
+              error={!!error.confirmPassword}
+              helperText={error.confirmPassword}
+            />
+          </Box>
 
-      <button type="submit" className="btn btn-primary d-flex">
-        Submit
-      </button>
-    </form>
+          <Box mb={3}>
+            <TextField
+              fullWidth
+              id="phone"
+              name="phone"
+              label="Số điện thoại"
+              type="tel"
+              value={info.phone}
+              onChange={handleInput}
+              error={!!error.phone}
+              helperText={error.phone}
+            />
+          </Box>
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ display: "flex" }}
+          >
+            Đăng Ký
+          </Button>
+        </Box>
+    </Paper>
   );
 };
 

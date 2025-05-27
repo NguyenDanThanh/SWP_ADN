@@ -28,7 +28,7 @@ export const signUpSchema = yup.object().shape({
     .matches(/[a-z]/, "Mật khẩu không đúng định dạng")
     .matches(/\d/, "Mật khẩu không đúng định dạng")
     .matches(/[@$!%*?&#]/, "Mật khẩu không đúng định dạng")
-    .matches(/^\S+$/, "Mật khẩu không đúng định dạng")
+    .matches(/^0\S+$/, "Mật khẩu không đúng định dạng")
     .required("Không được bỏ trống"),
   confirmPassword: yup
     .string()
@@ -38,5 +38,5 @@ export const signUpSchema = yup.object().shape({
   phone: yup
     .string()
     .required()
-    .matches(/^\d{10,15}$/, "Số điện thoại không đúng"),
+    .matches(/^0\d{9}$/, "Số điện thoại không đúng"),
 });
