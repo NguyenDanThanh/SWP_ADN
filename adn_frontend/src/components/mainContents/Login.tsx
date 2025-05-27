@@ -21,10 +21,34 @@ const Login = () => {
     });
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (!response.ok) {
+        alert("Đăng nhập thất bại");
+      } else {
+        const result = await response.json();
+        console.log("Đăng nhập thành công:", result);
+        alert("Đăng nhập thành công");
+      }
+    } catch (error) {
+      console.error("Lỗi:", error);
+      alert("Có lỗi xảy ra khi đăng nhập");
+    }
+  };
+
   return (
     <div>
       <Paper elevation={20} style={{ padding: 40, borderRadius: 20 }}>
-        <Box>
+        <Box component={"form"} onSubmit={handleSubmit}>
           <Typography variant="h5" gutterBottom>
             Đăng nhập
           </Typography>
@@ -45,16 +69,19 @@ const Login = () => {
             value={user.password}
             onChange={handleInput}
           />
-          <Button variant="contained" color="primary" fullWidth>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
             Đăng nhập
           </Button>
 
+          <Box mt={3} textAlign="start">
+            <Typography variant="body2">
+              <Link to="/forgot">Quên mật khẩu ? </Link>
+            </Typography>
+          </Box>
           <Box mt={3} textAlign="center">
             <Typography variant="body2">
-              Bạn chưa có tài khoản?
-              <Link to="/signup">
-                Đăng ký
-              </Link>
+              Bạn chưa có tài khoản?{"   "}
+              <Link to="/signup">Đăng ký</Link>
             </Typography>
           </Box>
         </Box>

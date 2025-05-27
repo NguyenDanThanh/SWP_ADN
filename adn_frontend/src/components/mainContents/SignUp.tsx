@@ -2,7 +2,15 @@ import { useState } from "react";
 import "./mainContent.css";
 import { signUpSchema } from "./Validation";
 import { ValidationError } from "yup";
-import { Box, Button, FormHelperText, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
 type Info = {
   fullName: string;
@@ -44,7 +52,7 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { confirmPassword, ...dataToSend } = info;
+    // const { confirmPassword, ...dataToSend } = info;
     try {
       //check valid before submit form
       await signUpSchema.validate(info, { abortEarly: false }); //if false will print all error, if true just print first error
@@ -52,12 +60,12 @@ const SignUp = () => {
       //if error set field to empty
       setError({});
 
-      const response = await fetch("http://localhost:8080/api/auth/register", {
+      const response = await fetch("http://localhost:8080/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToSend),
+        body: JSON.stringify(info),
       });
 
       console.log("Status code:", response.status);
@@ -88,117 +96,128 @@ const SignUp = () => {
 
   return (
     <Paper elevation={20} style={{ padding: 40, borderRadius: 20 }}>
-        <Box
-          component="form"
-          noValidate
-          autoComplete="off"
-          sx={{ width: 600 }}
-          onSubmit={handleSubmit}
-        >
-          <Typography variant="h5" gutterBottom color="blue">
-            Đăng Ký
-          </Typography>
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="validationDefault01"
-              name="fullName"
-              label="Họ và tên"
-              value={info.fullName}
-              onChange={handleInput}
-              error={!!error.fullName}
-              helperText={error.fullName}
-            />
-          </Box>
-
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="username"
-              name="username"
-              label="Tên đăng nhập"
-              value={info.username}
-              onChange={handleInput}
-              error={!!error.username}
-              helperText={error.username}
-            />
-          </Box>
-
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="email"
-              name="email"
-              label="Địa chỉ email"
-              type="email"
-              value={info.email}
-              onChange={handleInput}
-              error={!!error.email}
-              helperText={error.email}
-            />
-          </Box>
-
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="password"
-              name="password"
-              label="Mật khẩu"
-              type="password"
-              aria-describedby="rulePass"
-              value={info.password}
-              onChange={handleInput}
-              error={!!error.password}
-              helperText={error.password}
-            />
-            <FormHelperText id="rulePass" sx={{ textAlign: "left" }}>
-              <ul style={{ margin: 0, paddingLeft: 20 }}>
-                <li>Có ít nhất 8 ký tự</li>
-                <li>Có ít nhất 1 chữ thường và hoa</li>
-                <li>Có ít nhất 1 ký tự đặc biệt</li>
-                <li>Có ít nhất 1 chữ số</li>
-              </ul>
-            </FormHelperText>
-          </Box>
-
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="confirmPassword"
-              name="confirmPassword"
-              label="Nhập lại mật khẩu"
-              type="password"
-              value={info.confirmPassword}
-              onChange={handleInput}
-              error={!!error.confirmPassword}
-              helperText={error.confirmPassword}
-            />
-          </Box>
-
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="phone"
-              name="phone"
-              label="Số điện thoại"
-              type="tel"
-              value={info.phone}
-              onChange={handleInput}
-              error={!!error.phone}
-              helperText={error.phone}
-            />
-          </Box>
-
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        sx={{ width: 600 }}
+        onSubmit={handleSubmit}
+      >
+        <Typography variant="h5" gutterBottom color="blue">
+          Đăng Ký
+        </Typography>
+        <Box mb={3}>
+          <TextField
             fullWidth
-            sx={{ display: "flex" }}
-          >
-            Đăng Ký
-          </Button>
+            id="fullname"
+            name="fullName"
+            label="Họ và tên"
+            value={info.fullName}
+            onChange={handleInput}
+            error={!!error.fullName}
+            helperText={error.fullName}
+          />
         </Box>
+
+        <Box mb={3}>
+          <TextField
+            fullWidth
+            id="username"
+            name="username"
+            label="Tên đăng nhập"
+            value={info.username}
+            onChange={handleInput}
+            error={!!error.username}
+            helperText={error.username}
+          />
+        </Box>
+
+        <Box mb={3}>
+          <TextField
+            fullWidth
+            id="email"
+            name="email"
+            label="Địa chỉ email"
+            type="email"
+            value={info.email}
+            onChange={handleInput}
+            error={!!error.email}
+            helperText={error.email}
+          />
+        </Box>
+
+        <Box mb={3}>
+          <TextField
+            fullWidth
+            id="password"
+            name="password"
+            label="Mật khẩu"
+            type="password"
+            aria-describedby="rulePass"
+            value={info.password}
+            onChange={handleInput}
+            error={!!error.password}
+            helperText={error.password}
+          />
+          <FormHelperText
+            id="rulePass"
+            sx={{ textAlign: "left" }}
+            component="div"
+          >
+            <ul style={{ margin: 0, paddingLeft: 20 }}>
+              <li>Có ít nhất 8 ký tự</li>
+              <li>Có ít nhất 1 chữ thường và hoa</li>
+              <li>Có ít nhất 1 ký tự đặc biệt</li>
+              <li>Có ít nhất 1 chữ số</li>
+            </ul>
+          </FormHelperText>
+        </Box>
+
+        <Box mb={3}>
+          <TextField
+            fullWidth
+            id="confirmPassword"
+            name="confirmPassword"
+            label="Nhập lại mật khẩu"
+            type="password"
+            value={info.confirmPassword}
+            onChange={handleInput}
+            error={!!error.confirmPassword}
+            helperText={error.confirmPassword}
+          />
+        </Box>
+
+        <Box mb={3}>
+          <TextField
+            fullWidth
+            id="phone"
+            name="phone"
+            label="Số điện thoại"
+            type="tel"
+            value={info.phone}
+            onChange={handleInput}
+            error={!!error.phone}
+            helperText={error.phone}
+          />
+        </Box>
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ display: "flex" }}
+        >
+          Đăng Ký
+        </Button>
+
+        <Box mt={3} textAlign="center">
+          <Typography variant="body2">
+            Bạn đã có tài khoản? {"  "}
+            <Link to="/login">Đăng nhập</Link>
+          </Typography>
+        </Box>
+      </Box>
     </Paper>
   );
 };
