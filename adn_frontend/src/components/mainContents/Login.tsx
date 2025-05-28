@@ -1,13 +1,14 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 type UserInfo = {
   username: string;
   password: string;
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<UserInfo>({
     username: "",
     password: "",
@@ -38,6 +39,7 @@ const Login = () => {
         const result = await response.json();
         console.log("Đăng nhập thành công:", result);
         alert("Đăng nhập thành công");
+        navigate("/")
       }
     } catch (error) {
       console.error("Lỗi:", error);
@@ -75,7 +77,7 @@ const Login = () => {
 
           <Box mt={3} textAlign="start">
             <Typography variant="body2">
-              <Link to="/forgot">Quên mật khẩu ? </Link>
+              <Link to="/forget">Quên mật khẩu ? </Link>
             </Typography>
           </Box>
           <Box mt={3} textAlign="center">
