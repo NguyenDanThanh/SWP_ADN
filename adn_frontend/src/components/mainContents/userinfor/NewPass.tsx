@@ -1,6 +1,7 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import Login from "./Login";
+import { useNavigate } from "react-router-dom";
+
 
 type Pass = {
   newPassword: string;
@@ -16,8 +17,7 @@ const NewPass = ({ email }: Props) => {
     newPassword: "",
     confirmPassword: "",
   });
-
-  const[show, setShow] = useState(false);
+  const navigate = useNavigate();
 
   const { newPassword, confirmPassword } = newPass;
 
@@ -44,7 +44,7 @@ const NewPass = ({ email }: Props) => {
       if (!response.ok) {
         alert("Không thể đổi mật khẩu. Vui lòng thử lại");
       } else {
-        setShow(true)
+        navigate("/login")
       }
     } catch (error) {
       console.error("Lỗi:", error);
@@ -59,10 +59,6 @@ const NewPass = ({ email }: Props) => {
       [name]: value,
     });
   };
-
-  if(show){
-    return <Login/>
-  }
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
